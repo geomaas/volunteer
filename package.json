@@ -1,0 +1,19 @@
+{
+  "name": "volunteer",
+  "version": "1.0.0",
+  "description": "volunteer coordination app w/ front and backend",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geomaas/volunteer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/geomaas/volunteer/issues"
+  },
+  "homepage": "https://github.com/geomaas/volunteer#readme"
+}
