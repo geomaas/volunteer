@@ -1,5 +1,6 @@
-module.exports = function(vol) {
-    vol.controller('LoginController', ['$scope', '$location', '$http', function($scope, $location, $http) {
+let part = angular.module('VolControllers');
+
+    part.controller('LoginController', ['$scope', '$location', '$http', function($scope, $location, $http) {
         $scope.username = "",
         $scope.userpassword = "",
 
@@ -23,4 +24,3 @@ module.exports = function(vol) {
         };
 
     }]);
-};

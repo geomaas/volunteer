@@ -1,5 +1,6 @@
-module.exports = function(vol) {
-    vol.controller('CreateController', ['$scope', '$location', '$http', function($scope, $location, $http) {
+let part = angular.module('VolControllers');
+
+    part.controller('CreateController', ['$scope', '$location', '$http', function($scope, $location, $http) {
 
         $scope.create = function() {
             console.log("clicked create");
@@ -14,4 +15,3 @@ module.exports = function(vol) {
         };
 
     }]);
-};

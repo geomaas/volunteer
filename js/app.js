@@ -1,13 +1,19 @@
-let vol = angular.module('volApp', ['ngRoute']);
-//
+let vol = angular.module('VolApp', ['ngRoute', 'VolControllers', 'VolServices', 'VolDirectives']);
+angular.module('VolControllers', []);
+angular.module('VolServices', []);
+angular.module('VolDirectives', []);
+
+
 // // Controllers
-require('./controllers/logincontroller')(vol);
-require('./controllers/availablecontroller')(vol);
-
-
+require('./controllers/logincontroller');
+require('./controllers/availablecontroller');
 
 // // Services
-require('./services/availableservice')(vol);
+require('./services/availableservice');
+
+// //Directives
+require('./directives/availabledirective');
+require('./directives/userdirective');
 
 
 

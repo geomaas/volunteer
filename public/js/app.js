@@ -1,26 +1,45 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-module.exports = function(vol) {
-    vol.controller('AvailableController', ['$scope', 'AvailableService', '$location', '$http', function($scope, AvailableService, $location, $http) {
-        $scope.events = AvailableService.getEvents(),
+let part = angular.module('VolControllers');
 
-        $scope.signUp = function() {
-            console.log("clicked sign up");
-            $location.path('/your-events');
-            // $http({
-            //     url: '/favs',
-            //     method: 'post',
-            //     data: {
-            //      add event to user object to be referenced later check equality
-            //     }
-            // })
-        };
+part.controller('AvailableController', ['$scope', 'AvailableService', '$location', '$http', function($scope, AvailableService, $location, $http) {
+    $scope.events = AvailableService.getEvents(),
+        $scope.users = AvailableService.getUser(),
+        // $scope.filteredTodos = [],
+        $scope.currentPage = 0,
+        $scope.pageSize = 3;
+    $scope.eventsNumberOfPages = function() {
+        return Math.ceil($scope.events.length / $scope.pageSize)
+    };
+    $scope.userNumberOfPages = function() {
+        return Math.ceil($scope.users.length / $scope.pageSize)
+    };
+//     .filter('startFrom', function() {
+//     return function(input, start) {
+//         start = +start; //parse to int
+//         return input.slice(start);
+//     }
+// });
 
-    }]);
-};
+
+    $scope.signUp = function() {
+        console.log("clicked sign up");
+
+        $location.path('/your-events');
+        // $http({
+        //     url: '/favs',
+        //     method: 'post',
+        //     data: {
+        //      add event to user object to be referenced later check equality
+        //     }
+        // })
+    };
+
+}]);
 
 },{}],2:[function(require,module,exports){
-module.exports = function(vol) {
-    vol.controller('LoginController', ['$scope', '$location', '$http', function($scope, $location, $http) {
+let part = angular.module('VolControllers');
+
+    part.controller('LoginController', ['$scope', '$location', '$http', function($scope, $location, $http) {
         $scope.username = "",
         $scope.userpassword = "",
 
@@ -44,19 +63,68 @@ module.exports = function(vol) {
         };
 
     }]);
-};
 
 },{}],3:[function(require,module,exports){
-let vol = angular.module('volApp', ['ngRoute']);
-//
+let part = angular.module('VolDirectives');
+
+// The name matters; this is the HTML element name in this case.
+part.directive('volevent', function () {
+    return {
+        restrict: 'E',  // this directive is an HTML element
+        templateUrl: 'templates/directives/volevent.html',  // template to use
+        scope: {
+            // http://stackoverflow.com/questions/26409460/angularjs-pass-argument-to-directive
+            //
+            // if you care about user input: = is two-way binding
+            // else @ simply reads the value (one-way binding)
+            //
+            // info="x" is a thing that should henceforth be called 'book'
+            volevent: '=info',
+        },
+        // Good idea: don't leave random names scattered throughout your HTML elements
+        replace: true,
+    };
+});
+
+},{}],4:[function(require,module,exports){
+let part = angular.module('VolDirectives');
+
+// The name matters; this is the HTML element name in this case.
+part.directive('userdir', function () {
+    return {
+        restrict: 'E',  // this directive is an HTML element
+        templateUrl: 'templates/directives/user.html',  // template to use
+        scope: {
+            // http://stackoverflow.com/questions/26409460/angularjs-pass-argument-to-directive
+            //
+            // if you care about user input: = is two-way binding
+            // else @ simply reads the value (one-way binding)
+            //
+            // info="x" is a thing that should henceforth be called 'book'
+            userdir: '=info',
+        },
+        // Good idea: don't leave random names scattered throughout your HTML elements
+        replace: true,
+    };
+});
+
+},{}],5:[function(require,module,exports){
+let vol = angular.module('VolApp', ['ngRoute', 'VolControllers', 'VolServices', 'VolDirectives']);
+angular.module('VolControllers', []);
+angular.module('VolServices', []);
+angular.module('VolDirectives', []);
+
+
 // // Controllers
-require('./controllers/logincontroller')(vol);
-require('./controllers/availablecontroller')(vol);
-
-
+require('./controllers/logincontroller');
+require('./controllers/availablecontroller');
 
 // // Services
-require('./services/availableservice')(vol);
+require('./services/availableservice');
+
+// //Directives
+require('./directives/availabledirective');
+require('./directives/userdirective');
 
 
 
@@ -86,10 +154,12 @@ vol.config(['$routeProvider', function ($routeProvider) {
         });
 }]);
 
-},{"./controllers/availablecontroller":1,"./controllers/logincontroller":2,"./services/availableservice":4}],4:[function(require,module,exports){
-module.exports = function (vol) {
-    vol.factory('AvailableService', ['$http', function ($http) {
+},{"./controllers/availablecontroller":1,"./controllers/logincontroller":2,"./directives/availabledirective":3,"./directives/userdirective":4,"./services/availableservice":6}],6:[function(require,module,exports){
+let part = angular.module('VolServices');
+
+    part.factory('AvailableService', ['$http', function ($http) {
         let datesToVol = [];
+        let users = [];
 
         return {
             getEvents: function () {
@@ -103,8 +173,17 @@ module.exports = function (vol) {
 
                 return datesToVol;
             },
+            getUser: function() {
+              $http({
+                url: '/api/users.json',
+                method: 'get'
+              }).then(function(results){
+                console.table(results.data);
+                angular.copy(results.data, users)
+              });
+              return users;
+            },
         };
     }]);
-};
 
-},{}]},{},[3])
+},{}]},{},[5])
