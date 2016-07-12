@@ -5,7 +5,7 @@ module.exports = function(vol) {
 
         $scope.login = function() {
             console.log("clicked login");
-                  $location.path('/');
+                  $location.path('/available');
 
             // $http({
             //       url: '/login',

@@ -24,9 +24,13 @@ vol.config(['$routeProvider', function ($routeProvider) {
             controller: 'AvailableController',
             templateUrl: 'templates/available.html',
         })
-        .when('/signup', {
+        .when('/create', {
             // controller: 'AvailableController',
-            templateUrl: 'templates/signup.html',
+            templateUrl: 'templates/newevent.html',
+        })
+        .when('/your-events', {
+            // controller: 'AvailableController',
+            templateUrl: 'templates/userevents.html',
         })
         .otherwise({
             templateUrl: 'templates/shit.html',

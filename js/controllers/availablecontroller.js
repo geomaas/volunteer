@@ -4,20 +4,14 @@ module.exports = function(vol) {
 
         $scope.signUp = function() {
             console.log("clicked sign up");
-            $location.path('/signup');
+            $location.path('/your-events');
             // $http({
             //     url: '/favs',
             //     method: 'post',
             //     data: {
-            //       recipeId: recipe.id,
-            //       isFav: vote,
+            //      add event to user object to be referenced later check equality
             //     }
-            // }).then(function () {
-            //     $location.reload('/rating');
-            // }).catch(function () {
-            //     console.error('nooooo');
-            //     $location.path('/shit')
-            // });
+            // })
         };
 
     }]);
