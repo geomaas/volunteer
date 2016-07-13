@@ -4,7 +4,7 @@ let part = angular.module('VolControllers');
 part.controller('AvailableController', ['$scope', 'AvailableService', '$location', '$http', function($scope, AvailableService, $location, $http) {
     $scope.events = AvailableService.getEvents(),
         $scope.users = AvailableService.getUser(),
-        $scope.currentPage = 0,
+        $scope.currentPage = 1,
         $scope.pageSize = 3;
     $scope.eventsNumberOfPages = function() {
         return Math.ceil($scope.events.length / $scope.pageSize)
@@ -18,7 +18,6 @@ part.controller('AvailableController', ['$scope', 'AvailableService', '$location
         start = +start; //parse to int
         return input.slice(start);
       // }
-      return [];
     }
 });
 

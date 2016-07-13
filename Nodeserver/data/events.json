@@ -1,0 +1,74 @@
+[
+  {
+    "id": "0",
+    "name": "Yard Sale-a-palooza",
+    "date": "December 24, 2016",
+    "host": {
+      "name": "Salvation Army",
+      "num_events": 6
+    }
+  },
+  {
+    "id": "1",
+    "name": "Phone call-a-thon",
+    "date": "October 11, 2016",
+    "host": {
+      "name": "Phone Savers",
+      "num_events": 16
+    }
+  },
+  {
+    "id": "2",
+    "name": "Broken Boiler Fundraiser",
+    "date": "Smarch 13, 2013",
+    "host": {
+      "name": "Groundskeeper Willie",
+      "num_events": 3
+    }
+  },
+  {
+    "id": "3",
+    "name": "Broken Boiler Fundraiser",
+    "date": "Smarch 13, 2013",
+    "host": {
+      "name": "Groundskeeper Willie",
+      "num_events": 3
+    }
+  },
+  {
+    "id": "4",
+    "name": "Broken Boiler Fundraiser",
+    "date": "Smarch 13, 2013",
+    "host": {
+      "name": "Groundskeeper Willie",
+      "num_events": 3
+    }
+  },
+  {
+    "id": "5",
+    "name": "Broken Boiler Fundraiser",
+    "date": "Smarch 13, 2013",
+    "host": {
+      "name": "Groundskeeper Willie",
+      "num_events": 3
+    }
+  },
+  {
+    "id": "6",
+    "name": "Broken Boiler Fundraiser",
+    "date": "Smarch 13, 2013",
+    "host": {
+      "name": "Groundskeeper Willie",
+      "num_events": 3
+    }
+  },
+  {
+    "id": "7",
+    "name": "Broken Boiler Fundraiser",
+    "date": "Smarch 13, 2013",
+    "host": {
+      "name": "Groundskeeper Willie",
+      "num_events": 3
+    }
+  }
+]
