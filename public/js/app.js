@@ -4,7 +4,6 @@ let part = angular.module('VolControllers');
 part.controller('AvailableController', ['$scope', 'AvailableService', '$location', '$http', function($scope, AvailableService, $location, $http) {
     $scope.events = AvailableService.getEvents(),
         $scope.users = AvailableService.getUser(),
-        // $scope.filteredTodos = [],
         $scope.currentPage = 0,
         $scope.pageSize = 3;
     $scope.eventsNumberOfPages = function() {
@@ -13,12 +12,15 @@ part.controller('AvailableController', ['$scope', 'AvailableService', '$location
     $scope.userNumberOfPages = function() {
         return Math.ceil($scope.users.length / $scope.pageSize)
     };
-//     .filter('startFrom', function() {
-//     return function(input, start) {
-//         start = +start; //parse to int
-//         return input.slice(start);
-//     }
-// });
+    part.filter('startFrom', function() {
+    return function(input, start) {
+      // if(input) {
+        start = +start; //parse to int
+        return input.slice(start);
+      // }
+      return [];
+    }
+});
 
 
     $scope.signUp = function() {
@@ -145,9 +147,9 @@ vol.config(['$routeProvider', function ($routeProvider) {
             // controller: 'AvailableController',
             templateUrl: 'templates/newevent.html',
         })
-        .when('/your-events', {
+        .when('/users', {
             // controller: 'AvailableController',
-            templateUrl: 'templates/userevents.html',
+            templateUrl: 'templates/users.html',
         })
         .otherwise({
             templateUrl: 'templates/shit.html',
