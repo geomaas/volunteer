@@ -7,7 +7,7 @@ let part = angular.module('VolServices');
         return {
             getEvents: function () {
                 $http({
-                    url: '/api/events.json',
+                    url: 'http://localhost:7000/constructors/events',
                     method: 'get'
                 }).then(function (results) {
                   console.table(results.data);

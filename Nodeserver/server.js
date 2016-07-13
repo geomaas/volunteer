@@ -21,8 +21,8 @@ let hapi = require('hapi');
 let boom = require('boom');
 let inert = require('inert');
 
-let Usergroup = require('./constructors');
-let Eventgroup = require('./constructors');
+let Usergroup = require('./constructors/users');
+let Eventgroup = require('./constructors/events');
 
 // where we're headed
 let users = new Usergroup();
@@ -47,37 +47,41 @@ server.route({
         reply(events.getAll());
     },
 });
-
 server.route({
-    method: 'POST',
-    path: '/library/add',
+    method: 'GET',
+    path: '/constructors/users',
 
     handler: function (request, reply) {
-        if (added) {
-            reply(boom.badRequest('Already added Huck'));
-        } else {
-            books.add({
-                title: 'Huck Finn',
-                author: 'Mark Twain',
-            });
-
-            added = true;
-
-            reply();
-        }
+        reply(users.getAll());
     },
 });
 
 server.route({
     method: 'POST',
-    path: '/library/borrow/{bookId}',
+    path: '/constructors/users',
 
     handler: function (request, reply) {
-        books.borrow(parseInt(request.params.bookId));
+        // if () {
+        //     reply(boom.badRequest('users mess up somehow in post'));
+        // } else {
+            users.add(request);
 
-        reply();
+
+            reply();
+        // }
     },
-})
+});
+
+// server.route({
+//     method: 'POST',
+//     path: '/constructors/borrow/{bookId}',
+//
+//     handler: function (request, reply) {
+//         books.borrow(parseInt(request.params.bookId));
+//
+//         reply();
+//     },
+// })
 
 /**
  * Static serving of files. Web requests are all GET requests, and the
@@ -90,12 +94,12 @@ server.route({
     path: '/{param*}',
     handler: {
         directory: {
-            path: 'public/',
+            path: '../public/',
             redirectToSlash: true,
             index: true
         }
     }
 });
 
-
+//
 server.start();

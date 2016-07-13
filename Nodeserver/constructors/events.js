@@ -24,7 +24,7 @@ Eventgroup.prototype.load = function () {
 
 Eventgroup.prototype.save = function () {
     // where to put it, what to put there
-    fs.writeFile('data/events.json', JSON.stringify(this.books));
+    fs.writeFile('./data/events.json', JSON.stringify(this.books));
 }
 
 Eventgroup.prototype.add = function (event) {

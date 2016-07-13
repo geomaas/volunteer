@@ -46,21 +46,23 @@ let part = angular.module('VolControllers');
 
         $scope.login = function() {
             console.log("clicked login");
-                  $location.path('/available');
+                  // $location.path('/available');
 
-            // $http({
-            //       url: '/login',
-            //       method: 'post',
-            //       data: {
-            //           username: $scope.username,
-            //           password: $scope.userpassword,
-            //       },
-            //   }).then(function () {
-            //       $location.path('');
-            //   }).catch(function () {
-            //       console.error('INTRUDER');
-            //       $location.path('/shit')
-            //   });
+            $http({
+                  url: '/constructors/users',
+                  method: 'post',
+                  data: {
+                    
+                      username: $scope.username,
+                      password: $scope.userpassword,
+                  },
+              }).then(function () {
+                  // $location.path('');
+
+              }).catch(function () {
+                  console.error('INTRUDER');
+                  // $location.path('/shit')
+              });
         };
 
     }]);
@@ -165,7 +167,7 @@ let part = angular.module('VolServices');
         return {
             getEvents: function () {
                 $http({
-                    url: '/api/events.json',
+                    url: 'http://localhost:7000/constructors/events',
                     method: 'get'
                 }).then(function (results) {
                   console.table(results.data);
