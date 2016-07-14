@@ -2,25 +2,19 @@
 let part = angular.module('VolControllers');
 
 part.controller('AvailableController', ['$scope', 'AvailableService', '$location', '$http', function($scope, AvailableService, $location, $http) {
-    $scope.events = AvailableService.getEvents(),
-        $scope.users = AvailableService.getUser(),
-        $scope.currentPage = 1,
-        $scope.pageSize = 3;
-    $scope.eventsNumberOfPages = function() {
-        return Math.ceil($scope.events.length / $scope.pageSize)
+    $scope.events = AvailableService.getEvents();
+    $scope.users = AvailableService.getUser($scope.currentPage, $scope.pageSize);
+    $scope.currentPage = 0;
+    $scope.pageSize = 3;
+    $scope.prev = function() {
+        $scope.currentPage = $scope.currentPage - 1;
+        $scope.users = AvailableService.getUser($scope.currentPage, $scope.pageSize);
     };
-    $scope.userNumberOfPages = function() {
-        return Math.ceil($scope.users.length / $scope.pageSize)
-    };
-    part.filter('startFrom', function() {
-    return function(input, start) {
-      // if(input) {
-        start = +start; //parse to int
-        return input.slice(start);
-      // }
-    }
-});
 
+    $scope.next = function() {
+        $scope.currentPage = $scope.currentPage + 1;
+        $scope.users = AvailableService.getUser($scope.currentPage, $scope.pageSize);
+    };
 
     $scope.signUp = function() {
         console.log("clicked sign up");
@@ -149,7 +143,7 @@ vol.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'templates/newevent.html',
         })
         .when('/users', {
-            // controller: 'AvailableController',
+            controller: 'AvailableController',
             templateUrl: 'templates/users.html',
         })
         .otherwise({
@@ -160,33 +154,37 @@ vol.config(['$routeProvider', function ($routeProvider) {
 },{"./controllers/availablecontroller":1,"./controllers/logincontroller":2,"./directives/availabledirective":3,"./directives/userdirective":4,"./services/availableservice":6}],6:[function(require,module,exports){
 let part = angular.module('VolServices');
 
-    part.factory('AvailableService', ['$http', function ($http) {
-        let datesToVol = [];
-        let users = [];
+part.factory('AvailableService', ['$http', function($http) {
+    let datesToVol = [];
+    let users = [];
 
-        return {
-            getEvents: function () {
-                $http({
-                    url: 'http://localhost:7000/constructors/events',
-                    method: 'get'
-                }).then(function (results) {
-                  console.table(results.data);
-                    angular.copy(results.data, datesToVol)
-                });
-
-                return datesToVol;
-            },
-            getUser: function() {
-              $http({
-                url: '/api/users.json',
+    return {
+        getEvents: function() {
+            $http({
+                url: 'http://localhost:7000/constructors/events',
                 method: 'get'
-              }).then(function(results){
+            }).then(function(results) {
                 console.table(results.data);
+                angular.copy(results.data, datesToVol)
+            });
+
+            return datesToVol;
+        },
+        getUser: function() {
+            $http({
+                url: 'http://localhost:7000/constructors/users',
+                method: 'get'
+            }).then(function(results) {
+                console.table("worked",results.data);
                 angular.copy(results.data, users)
-              });
-              return users;
-            },
-        };
-    }]);
+            }).then(function(currentPage, pageSize) {
+                let start = (currentPage) * pageSize;
+                // get a subset of array
+                return users.slice(start, start + pageSize);
+            })
+            return users;
+        },
+    };
+}]);
 
 },{}]},{},[5])

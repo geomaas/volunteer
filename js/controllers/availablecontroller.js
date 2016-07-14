@@ -1,25 +1,19 @@
 let part = angular.module('VolControllers');
 
 part.controller('AvailableController', ['$scope', 'AvailableService', '$location', '$http', function($scope, AvailableService, $location, $http) {
-    $scope.events = AvailableService.getEvents(),
-        $scope.users = AvailableService.getUser(),
-        $scope.currentPage = 1,
-        $scope.pageSize = 3;
-    $scope.eventsNumberOfPages = function() {
-        return Math.ceil($scope.events.length / $scope.pageSize)
+    $scope.events = AvailableService.getEvents();
+    $scope.users = AvailableService.getUser($scope.currentPage, $scope.pageSize);
+    $scope.currentPage = 0;
+    $scope.pageSize = 3;
+    $scope.prev = function() {
+        $scope.currentPage = $scope.currentPage - 1;
+        $scope.users = AvailableService.getUser($scope.currentPage, $scope.pageSize);
     };
-    $scope.userNumberOfPages = function() {
-        return Math.ceil($scope.users.length / $scope.pageSize)
-    };
-    part.filter('startFrom', function() {
-    return function(input, start) {
-      // if(input) {
-        start = +start; //parse to int
-        return input.slice(start);
-      // }
-    }
-});
 
+    $scope.next = function() {
+        $scope.currentPage = $scope.currentPage + 1;
+        $scope.users = AvailableService.getUser($scope.currentPage, $scope.pageSize);
+    };
 
     $scope.signUp = function() {
         console.log("clicked sign up");

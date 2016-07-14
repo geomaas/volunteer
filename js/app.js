@@ -35,7 +35,7 @@ vol.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'templates/newevent.html',
         })
         .when('/users', {
-            // controller: 'AvailableController',
+            controller: 'AvailableController',
             templateUrl: 'templates/users.html',
         })
         .otherwise({

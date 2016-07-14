@@ -25,7 +25,7 @@ Usergroup.prototype.load = function () {
 
 Usergroup.prototype.save = function () {
     // where to put it, what to put there
-    fs.writeFile('data/users.json', JSON.stringify(this.books));
+    fs.writeFile('data/users.json', JSON.stringify(this.users));
 }
 
 Usergroup.prototype.add = function (user) {
